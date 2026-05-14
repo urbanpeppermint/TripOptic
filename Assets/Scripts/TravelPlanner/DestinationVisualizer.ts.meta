@@ -1,0 +1,101 @@
+- !<AssetImportMetadata/5839436e-cad9-4c11-bbd4-8d75e93e8893>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 05781b1f-9394-4d16-8742-9e3355989ad1
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 05781b1f-9394-4d16-8742-9e3355989ad1
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 329a1579-557c-41e8-b83c-2b97cccc5dd1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/329a1579-557c-41e8-b83c-2b97cccc5dd1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 27c2eae7-c8f6-44e0-8ee0-9982e2b371f3
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    camera: false
+    fgDepth: false
+    fgParallax: false
+    foregroundPlane: false
+    imagenAspectRatio: false
+    imagenModel: false
+    midDepth: false
+    midParallax: false
+    midPlane: false
+    parallaxSensitivity: false
+    promptWeatherPhrase: false
+    sceneCategory: false
+    skyDepth: false
+    skyParallax: false
+    skyPlane: false
+    spatialImageFrame: false
+    swapSpatialWhenReady: false
+    useCategoryPrompt: false
+    useSpatialImageFrame: false
+    vignettePlane: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - imagenModel: imagen-3.0-generate-002
+      imagenAspectRatio: "16:9"
+      skyPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      midPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      foregroundPlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      vignettePlane: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      spatialImageFrame: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      useSpatialImageFrame: false
+      swapSpatialWhenReady: true
+      camera: !<reference.Camera> 00000000-0000-0000-0000-000000000000
+      skyDepth: !<float> -600.000000
+      midDepth: !<float> -300.000000
+      fgDepth: !<float> -150.000000
+      skyParallax: 0.020000
+      midParallax: 0.060000
+      fgParallax: 0.120000
+      parallaxSensitivity: !<float> 100.000000
+      useCategoryPrompt: false
+      sceneCategory: overview
+      promptWeatherPhrase: clear
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input string imagenModel = "imagen-3.0-generate-002" {"hint":"Vertex model id (RSG Imagen proxy)."}'
+    - '// @input string imagenAspectRatio = "16:9" {"hint":"Imagen aspect ratio (e.g. 1:1, 4:3, 16:9)."}'
+    - // @input SceneObject skyPlane
+    - // @input SceneObject midPlane
+    - // @input SceneObject foregroundPlane
+    - // @input SceneObject vignettePlane
+    - '// @input Component.ScriptComponent spatialImageFrame {"hint":"Assign the Spatial Image template ScriptComponent (SpatialImage.setImage)."}'
+    - // @input bool useSpatialImageFrame
+    - '// @input bool swapSpatialWhenReady = true {"hint":"Ignored for stock SpatialImage (single-arg setImage). Kept for SikSpatialImageFrame swap flag if you swap prefabs."}'
+    - '// @input Component.Camera camera {"hint":"Defaults to first Camera under scene roots if unset"}'
+    - '// @input float skyDepth = -600 {"hint":"Sky layer local Z in cm (negative = forward in typical Spectacles UI)"}'
+    - // @input float midDepth = -300
+    - // @input float fgDepth = -150
+    - // @input float skyParallax = 0.02
+    - // @input float midParallax = 0.06
+    - // @input float fgParallax = 0.12
+    - '// @input float parallaxSensitivity = 100 {"hint":"Multiplies yaw/pitch parallax offset (layered mode only)"}'
+    - '// @input bool useCategoryPrompt {"hint":"Use category templates from DestinationScenePrompts"}'
+    - '// @input string sceneCategory = "overview" {"hint":"overview | stay | routes | food | places | adventure | weather"}'
+    - '// @input string promptWeatherPhrase = "clear" {"hint":"Fills {weather} when sceneCategory is weather"}'
