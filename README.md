@@ -1,66 +1,57 @@
 # TripOptic
 
-**TripOptic** is a **Snap Spectacles** lens experience that combines **voice-first trip planning**, **on-device spatial UI**, and **multimodal AI** so travelers can plan, refine, and validate a trip without juggling phone apps in the moment.
+**TripOptic** is a **Snap Spectacles** lens that combines **voice-first trip planning**, **spatial AR UI**, and **multimodal AI** so you can shape a trip without juggling phone apps in the moment.
+
+Open the project with **`Travel_Planner.esproj`** in **Lens Studio 5.15+** (Spectacles target).
 
 ---
 
 ## What it does
 
-TripOptic walks the user from **first intent** (“I’m going to Lisbon next month for work”) to a **structured trip draft** (departure, destination, dates, purpose), then requests a **single Gemini-powered trip plan** and surfaces it as **interactive category rows** in AR.
+TripOptic walks you from **first intent** (“I’m going to Lisbon next month for work”) to a **structured trip draft** (departure, destination, dates, purpose), then requests a **single Gemini-powered trip plan** and surfaces it as **interactive category rows** in AR.
 
 ### Core capabilities
 
 | Area | Description |
 |------|-------------|
-| **Voice intake** | Hands-free capture of cities, dates, and trip purpose via speech-to-text, with **deterministic parsing** so common phrases map reliably to `TripDraft` fields before any plan request. |
-| **AI trip plan** | One-shot **Google Gemini** (`generateContent`) plan generation through **Remote Service Gateway**, aligned with typed `TripPlanResponse` cards (transport, stay, places, food, weather, pack). |
-| **Category detail** | Pinch-to-expand **beta-style detail panels** per category, with formatted prices, options, and practical notes (`CategoryPlanDetailController`). |
-| **Pack scan** | **Vision-assisted packing**: capture a frame from the device camera (or editor-safe text fallback), send to Gemini Vision, and show suggestions aligned with real weather when **AccuWeather** is wired (`PackScanController`, `WeatherAccuBridge`). |
-| **Live weather** | Optional **AccuWeather** integration so forecasts and summaries can inform copy, packing hints, and prompts. |
-| **Keyboard path** | **AR keyboard** flow for users who prefer typing (stepped fields + confirm), documented alongside voice in `Assets/Scripts/TravelPlanner/SCENE_SETUP.md`. |
-| **TTS (optional)** | **OpenAI**-backed speech for status, keyboard guidance, and spoken category bodies when `AssistantTtsController` is configured. |
-| **Destination feel** | Optional **destination imagery** hook (`DestinationVisualizer`, `NewInCityAssistant`) to reinforce place context after confirmation. |
-| **Purpose modes** | **Leisure**, **Business**, and **Bleisure** wired through `TravelPlannerController` and synced into the assistant draft. |
+| **Voice intake** | Hands-free capture of cities, dates, and trip purpose via speech-to-text, with **deterministic parsing** so common phrases map reliably to draft fields before any plan request. |
+| **AI trip plan** | One-shot **Google Gemini** (`generateContent`) through **Remote Service Gateway**, aligned with typed plan cards (transport, stay, places, food, weather, pack). |
+| **Category detail** | Pinch-to-expand **detail panels** per category, with formatted prices, options, and practical notes. |
+| **Pack scan** | **Vision-assisted packing**: camera frame (or editor-safe fallback) → Gemini Vision, with suggestions informed by **live AccuWeather** when wired. |
+| **Live weather** | Optional **AccuWeather** integration for forecasts, summaries, and pack hints. |
+| **Keyboard path** | **AR keyboard** stepped flow for typing instead of voice. |
+| **Destination imagery** | Optional **Imagen** preview pushed to **Spatial Image** (`DestinationVisualizer`) after the destination is confirmed. |
+| **TTS (optional)** | **OpenAI** narration for status, keyboard guidance, and category bodies when configured. |
+| **Purpose modes** | **Leisure**, **Business**, and **Bleisure** through the planner controller and assistant draft. |
 
 ---
 
-## Who it is for (use cases)
+## Who it is for
 
-1. **Business travelers** — quick voice capture of dates and cities, structured options for transport and accommodation, weather-aware packing.
-2. **Bleisure / weekend trips** — blend work constraints with leisure categories (places, restaurants) in one plan surface.
-3. **Explorers already in-market** — draft supports **local-only** behavior (e.g. skip long-haul transport) when the user is already at the destination.
-4. **Spectacles-first users** — interaction built around **Spectacles Interaction Kit (SIK)** (pinch, toggles, container UI) so the lens remains usable while mobile stays in the pocket.
-
----
-
-## Why TripOptic (benefits)
-
-- **Calm orchestration** — Voice is parsed into a **stable draft**; Gemini is invoked when the draft is ready, reducing cost, latency, and “LLM roulette” on every utterance.
-- **One coherent plan object** — Categories share a single `TripPlanResponse`, keeping UI, TTS, and detail panels aligned.
-- **Grounded packing** — Pack checks can combine **what the camera sees** with **real forecast context**, not generic lists.
-- **Accessibility** — Parallel **voice** and **keyboard** paths respect different environments (noisy streets vs. quiet rooms).
-- **Operator-friendly scene wiring** — `SCENE_SETUP.md` documents bridges (`AIAssistantUIBridge`, mic mute, plan button, pack HUD roots) so teams can reproduce builds.
+- **Business travelers** — quick voice capture of dates and cities, structured transport and stay options, weather-aware packing.
+- **Bleisure / weekend trips** — work constraints plus leisure categories in one surface.
+- **Explorers already in-market** — local-only behavior when you are already at the destination.
+- **Spectacles-first users** — built around **Spectacles Interaction Kit (SIK)** (pinch, toggles, container UI).
 
 ---
 
-## Achievements (project highlights)
+## Why TripOptic
 
-- End-to-end **Gemini trip planning** integrated with **Lens Studio** + **Remote Service Gateway** patterns (correct use of `Gemini.models()` / built-in parameters, not ad-hoc RSM endpoints).
-- **Robust speech date handling** — Month/weekday tokens and ASR noise words are excluded from city inference to cut common voice bugs (`GeminiAssistant`).
-- **Structured commerce-style fields** — Normalized **price / night / stay** display paths (`PlanPriceFormat`) for consistent accommodation lines.
-- **Pack scan session UX** — Session holder, camera preview, capture/close flows, and category navigation coordinated so scan UI does not fight the detail panel (`PackScanController`, `CategoryPlanDetailController`).
-- **Weather bridge** — First-party AccuWeather package wiring for **live** context in prompts and UI.
-- **Optional TTS layer** — Pluggable narration without blocking core text UI.
+- **Calm orchestration** — Speech becomes a **stable draft**; Gemini runs when the draft is ready, not on every utterance.
+- **One plan object** — Categories share a single structured response so UI, TTS, and detail panels stay aligned.
+- **Grounded packing** — Pack checks combine **what the camera sees** with **forecast context**, not generic lists.
+- **Voice and keyboard** — Parallel paths for noisy streets vs. quiet rooms.
+- **Reproducible wiring** — `Assets/Scripts/TravelPlanner/SCENE_SETUP.md` documents bridges, pack HUD, mic mute, and keyboard.
 
 ---
 
 ## Tech stack
 
 - **Snap Lens Studio** / **Spectacles**
-- **TypeScript** components (`Assets/Scripts/TravelPlanner/`)
+- **TypeScript** — `Assets/Scripts/TravelPlanner/`
 - **Spectacles Interaction Kit (SIK)**
-- **Remote Service Gateway** — Google GenAI (Gemini), optional OpenAI for TTS
-- **AccuWeather** remote module (see `Packages/Weather - AccuWeather API.lspkg`)
+- **Remote Service Gateway** — Google GenAI (Gemini, Imagen), optional OpenAI for TTS
+- **AccuWeather** — `Packages/Weather - AccuWeather API.lspkg`
 
 ---
 
@@ -69,32 +60,47 @@ TripOptic walks the user from **first intent** (“I’m going to Lisbon next mo
 | Path | Role |
 |------|------|
 | `Assets/Scripts/TravelPlanner/` | Application logic: assistant, UI bridges, pack scan, weather, TTS, types |
-| `Assets/Scripts/TravelPlanner/SCENE_SETUP.md` | **Inspector wiring guide** — buttons, text targets, keyboard, TTS, pack HUD |
-| `TripOptic.esproj` | Lens Studio project entry |
+| `Assets/Scripts/TravelPlanner/SCENE_SETUP.md` | **Inspector wiring guide** |
+| `travel-lens-master-spec.md` | Reference architecture and API notes (documentation only) |
+| `Travel_Planner.esproj` | Lens Studio project entry |
 
 ---
 
 ## Getting started
 
-1. Open **`TripOptic.esproj`** in **Lens Studio**.
+1. Open **`Travel_Planner.esproj`** in **Lens Studio**.
 2. Configure **Remote Service Gateway** credentials for Gemini (and OpenAI if using TTS), per Snap’s RSG documentation.
 3. Follow **`Assets/Scripts/TravelPlanner/SCENE_SETUP.md`** to verify scene references (`GeminiAssistant`, `AIAssistantUIBridge`, `ASRQueryController`, `PackScanController`, etc.).
-4. Build to **Spectacles** for full microphone, camera, and **AR keyboard** behavior; editor preview has documented limitations (e.g. camera encode, `textInputSystem`).
+4. Build to **Spectacles** for full microphone, camera, and **AR keyboard** behavior; editor preview has documented limitations (camera encode, `textInputSystem`).
+
+Do **not** commit API keys or `.env` files. Use Lens Studio’s credential UI for RSG.
+
+---
+
+## Roadmap (not shipped in this build)
+
+Ideas from `travel-lens-master-spec.md` that are **not** implemented in the lens today:
+
+- **Fresh-session route & stay lookup** — optional **Internet Module WebView** per category (new session per tap, no persistent cookies).
+- **Spatial itinerary timeline** and **flight-day mode** (gate/terminal context).
+- **Saved trips** and optional price watch over time.
+
+Transport and stay lines in the UI are **Gemini-generated suggestions** with comparison *pointers* in copy (e.g. “check Skyscanner”), not in-lens booking or live fare APIs.
 
 ---
 
 ## Credits
 
-- **UI / UX design:** [Forouzan (@forouzan1990)](https://github.com/forouzan1990) — GitHub: [https://github.com/forouzan1990](https://github.com/forouzan1990) · [ArtStation](https://forouzan.artstation.com/)
+- **UI / UX design:** [Forouzan (@forouzan1990)](https://github.com/forouzan1990) · [ArtStation](https://forouzan.artstation.com/)
 
 ---
 
 ## License
 
-No default license file is shipped in this export. Add a `LICENSE` of your choice before redistributing if you need explicit terms.
+No default license file is included. Add a `LICENSE` before redistributing if you need explicit terms.
 
 ---
 
 ## Disclaimer
 
-TripOptic generates **informational** travel suggestions. Fares, availability, and entry rules change; users should **verify** bookings and requirements with official sources and providers.
+TripOptic generates **informational** travel suggestions. Fares, availability, and entry rules change; **verify** bookings and requirements with official sources and providers.
