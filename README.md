@@ -2,8 +2,6 @@
 
 **TripOptic** is a **Snap Spectacles** lens that combines **voice-first trip planning**, **spatial AR UI**, and **multimodal AI** so you can shape a trip without juggling phone apps in the moment.
 
-Open the project with **`Travel_Planner.esproj`** in **Lens Studio 5.15+** (Spectacles target).
-
 ---
 
 ## What it does
